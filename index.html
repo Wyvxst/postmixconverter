@@ -7,82 +7,85 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            padding: 20px;
+            background-color: #3a3a3a; /* Dark grey background */
+            padding: 0;
+            display: flex;
+            justify-content: center; /* Center the entire container horizontally */
+            align-items: center; /* Center vertically */
+            height: 100vh;
+            margin: 0;
         }
 
         .container {
-            max-width: 300px;
-            margin: 0 auto;
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 400px; /* Adjusted width for centering */
+            text-align: center; /* Center the container content */
+        }
+
+        /* Remove arrows from number inputs */
+        input[type=number]::-webkit-outer-spin-button,
+        input[type=number]::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        input[type=number] {
+            -moz-appearance: textfield; /* For Firefox */
         }
 
         .row {
-            display: flex;
-            justify-content: space-between;
+            display: grid;
+            grid-template-columns: 150px 60px 80px; /* Adjust input width */
             align-items: center;
             margin-bottom: 15px;
         }
 
-        .row input[type="number"] {
+        input[type="number"], .output-box {
             padding: 8px;
             font-size: 14px;
-            width: 60px; /* Reduced the width */
+            width: 60px; /* Make input fields half as wide */
+            text-align: center;
             border: 1px solid #ccc;
             border-radius: 4px;
-            text-align: center;
         }
 
         .output-box {
-            padding: 8px;
-            font-size: 14px;
-            width: 60px; /* Reduced the width */
-            background-color: #e0e0e0;
-            text-align: center;
-            border-radius: 4px;
-            border: 1px solid #ccc;
+            border: none;
+            background: none;
+            color: #fff;
+            margin-left: 15px; /* Move output fields slightly to the right */
         }
 
-        .header {
-            display: flex;
-            justify-content: space-between;
+        .label {
+            text-align: right; /* Right-align the labels */
             font-weight: bold;
-            margin-bottom: 10px;
-        }
-
-        .header div {
-            text-align: center;
-            flex: 1;
+            color: #fff;
+            padding-right: 10px; /* Add spacing between label and input field */
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="header">
-            <div>KG</div>
-            <div>Litres</div>
-        </div>
-        
         <div class="row">
-            <input type="number" id="input1" step="0.01" min="0.47" value="0.47" placeholder="Placeholder1" onchange="calculate()">
+            <div class="label">Lemonade HY</div>
+            <input type="number" id="input1" step="0.01" min="0.47" value="0.47" onchange="calculate()">
             <div class="output-box" id="output1">0.00</div>
         </div>
 
         <div class="row">
-            <input type="number" id="input2" step="0.01" min="0.47" value="0.47" placeholder="Placeholder2" onchange="calculate()">
+            <div class="label">Diet Pepsi HY</div>
+            <input type="number" id="input2" step="0.01" min="0.47" value="0.47" onchange="calculate()">
             <div class="output-box" id="output2">0.00</div>
         </div>
 
         <div class="row">
-            <input type="number" id="input3" step="0.01" min="0.47" value="0.47" placeholder="Placeholder3" onchange="calculate()">
+            <div class="label">Pepsi</div>
+            <input type="number" id="input3" step="0.01" min="0.47" value="0.47" onchange="calculate()">
             <div class="output-box" id="output3">0.00</div>
         </div>
 
         <div class="row">
-            <input type="number" id="input4" step="0.01" min="0.47" value="0.47" placeholder="Placeholder4" onchange="calculate()">
+            <div class="label">Pepsi Max HY</div>
+            <input type="number" id="input4" step="0.01" min="0.47" value="0.47" onchange="calculate()">
             <div class="output-box" id="output4">0.00</div>
         </div>
     </div>
