@@ -14,6 +14,7 @@
             align-items: center; /* Center vertically */
             height: 100vh;
             margin: 0;
+            position: relative;
         }
 
         .container {
@@ -34,37 +35,85 @@
 
         .row {
             display: grid;
-            grid-template-columns: 150px 60px 80px; /* Adjust input width */
+            grid-template-columns: 150px 45px 80px; /* Adjust input width */
             align-items: center;
-            margin-bottom: 15px;
+            margin-bottom: 25px; /* Increase vertical spacing between rows */
         }
 
         input[type="number"], .output-box {
             padding: 8px;
             font-size: 14px;
-            width: 60px; /* Make input fields half as wide */
+            width: 45px; /* Reduce the input field width by 25% */
             text-align: center;
             border: 1px solid #ccc;
             border-radius: 4px;
+            background-color: #6e6e6e; /* Grey background for input boxes */
+            color: #fff; /* White text in input boxes */
         }
 
         .output-box {
             border: none;
             background: none;
-            color: #fff;
-            margin-left: 15px; /* Move output fields slightly to the right */
+            font-weight: bold; /* Make output numbers bold */
+            font-size: 16px; /* Slightly increase font size */
+            color: green; /* Make output numbers green */
+            margin-left: 40px; /* Move output fields slightly to the right */
         }
 
         .label {
             text-align: right; /* Right-align the labels */
-            font-weight: bold;
+            font-weight: normal; /* Make the titles less bold */
             color: #fff;
-            padding-right: 10px; /* Add spacing between label and input field */
+            padding-right: 20px; /* Adjust padding to split the difference */
+        }
+
+        .header-labels {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            font-weight: bold;
+            color: white;
+        }
+
+        .header-labels div {
+            text-align: center;
+        }
+
+        .header-kg {
+            margin-left: 169px; /* Adjust to position KG above the input fields */
+        }
+
+        .header-l {
+            margin-right: 131px; /* Adjust to position L above the output fields */
+        }
+
+        .warning {
+            color: red;
+            font-size: 12px;
+            display: none; /* Initially hidden */
+        }
+
+        /* Vertical white line */
+        .vertical-line {
+            position: absolute;
+            top: 16px;  /* Adjust to move the line vertically */
+            left: 790px; /* Adjust to move the line horizontally */
+            width: 2px;  /* The thickness of the line */
+            height: 260px; /* The height of the line */
+            background-color: white; /* The color of the line */
         }
     </style>
 </head>
 <body>
+    <div class="vertical-line"></div> <!-- Vertical white line -->
+
     <div class="container">
+        <!-- KG and L labels -->
+        <div class="header-labels">
+            <div class="header-kg">KG</div>
+            <div class="header-l">L</div>
+        </div>
+
         <div class="row">
             <div class="label">Lemonade HY</div>
             <input type="number" id="input1" step="0.01" min="0.47" value="0.47" onchange="calculate()">
@@ -88,6 +137,8 @@
             <input type="number" id="input4" step="0.01" min="0.47" value="0.47" onchange="calculate()">
             <div class="output-box" id="output4">0.00</div>
         </div>
+
+        <div class="warning" id="warning-message">0.47 is the minimum possible weight</div>
     </div>
 
     <script>
@@ -110,6 +161,26 @@
             document.getElementById('output3').textContent = result3;
             document.getElementById('output4').textContent = result4;
         }
+
+        // Check if the input value is below 0.47
+        function checkMinValue(event) {
+            let input = event.target;
+            let warningMessage = document.getElementById('warning-message');
+
+            // If the input value is below 0.47, show the warning message and reset the value to 0.47
+            if (parseFloat(input.value) < 0.47) {
+                input.value = 0.47;
+                warningMessage.style.display = 'block';
+            } else {
+                warningMessage.style.display = 'none';
+            }
+        }
+
+        // Add event listeners to all input fields
+        document.getElementById('input1').addEventListener('input', checkMinValue);
+        document.getElementById('input2').addEventListener('input', checkMinValue);
+        document.getElementById('input3').addEventListener('input', checkMinValue);
+        document.getElementById('input4').addEventListener('input', checkMinValue);
 
         // Initial calculation on page load
         window.onload = calculate;
