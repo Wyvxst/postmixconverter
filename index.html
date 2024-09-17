@@ -14,12 +14,12 @@
             align-items: center; /* Center vertically */
             height: 100vh;
             margin: 0;
-            position: relative;
         }
 
         .container {
             width: 400px; /* Adjusted width for centering */
             text-align: center; /* Center the container content */
+            position: relative; /* Make the container the reference for absolute positioning */
         }
 
         /* Remove arrows from number inputs */
@@ -97,7 +97,7 @@
         .vertical-line {
             position: absolute;
             top: 16px;  /* Adjust to move the line vertically */
-            left: 790px; /* Adjust to move the line horizontally */
+            right: 0px; /* Stick the line to the right inside the container */
             width: 2px;  /* The thickness of the line */
             height: 260px; /* The height of the line */
             background-color: white; /* The color of the line */
@@ -105,9 +105,10 @@
     </style>
 </head>
 <body>
-    <div class="vertical-line"></div> <!-- Vertical white line -->
 
     <div class="container">
+        <div class="vertical-line"></div> <!-- Vertical white line -->
+
         <!-- KG and L labels -->
         <div class="header-labels">
             <div class="header-kg">KG</div>
