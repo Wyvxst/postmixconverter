@@ -127,25 +127,25 @@
 
         <div class="row">
             <div class="label">Lemonade HY</div>
-            <input type="number" id="input1" step="0.01" min="0.47" value="0.47" onchange="calculate()">
+            <input type="number" id="input1" step="0.01" min="0.47" value="0.47" onchange="calculate()" onfocus="selectText(this)">
             <div class="output-box" id="output1">0.00</div>
         </div>
 
         <div class="row">
             <div class="label">Diet Pepsi HY</div>
-            <input type="number" id="input2" step="0.01" min="0.47" value="0.47" onchange="calculate()">
+            <input type="number" id="input2" step="0.01" min="0.47" value="0.47" onchange="calculate()" onfocus="selectText(this)">
             <div class="output-box" id="output2">0.00</div>
         </div>
 
         <div class="row">
             <div class="label">Pepsi</div>
-            <input type="number" id="input3" step="0.01" min="0.47" value="0.47" onchange="calculate()">
+            <input type="number" id="input3" step="0.01" min="0.47" value="0.47" onchange="calculate()" onfocus="selectText(this)">
             <div class="output-box" id="output3">0.00</div>
         </div>
 
         <div class="row">
             <div class="label">Pepsi Max HY</div>
-            <input type="number" id="input4" step="0.01" min="0.47" value="0.47" onchange="calculate()">
+            <input type="number" id="input4" step="0.01" min="0.47" value="0.47" onchange="calculate()" onfocus="selectText(this)">
             <div class="output-box" id="output4">0.00</div>
         </div>
 
@@ -158,6 +158,11 @@
     </div>
 
     <script>
+        // Function to select all text when input is focused
+        function selectText(input) {
+            input.select();
+        }
+
         function calculate() {
             // Get input values
             let input1 = parseFloat(document.getElementById('input1').value);
