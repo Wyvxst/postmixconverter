@@ -90,7 +90,11 @@
 
         .warning {
             color: red;
-            font-size: 12px;
+            font-size: 16px;
+            position: absolute;
+            margin-top: -330px;
+            margin-left: 0px;
+            text-align: centre;
             display: none; /* Initially hidden */
         }
 
@@ -108,7 +112,7 @@
             color: #6e6e6e;
             font-size: 12px;
             margin-top: 40px;
-            margin-right: -50px;
+            margin-right: 40px;
             opacity: 1.0;
             text-align: right;
         }
@@ -154,57 +158,90 @@
 
     <!-- Version Notice -->
     <div class="version-notice">
-        Post-Mix Converter <br>  by Aaron Wayne, v0.9
+        Post-Mix Converter for 12 Litre Boxes <br>  by Aaron Wayne, v0.8      
     </div>
 
-    <script>
-        // Function to select all text when input is focused
-        function selectText(input) {
-            input.select();
+<script>
+    // Function to select all text when input is focused
+    function selectText(input) {
+        input.select();
+    }
+
+    function calculate() {
+        // Get input values
+        let input1 = parseFloat(document.getElementById('input1').value);
+        let input2 = parseFloat(document.getElementById('input2').value);
+        let input3 = parseFloat(document.getElementById('input3').value);
+        let input4 = parseFloat(document.getElementById('input4').value);
+
+        // Perform calculations
+        let result1 = ((input1 - 0.4666) / 1.0135).toFixed(2);
+        let result2 = ((input2 - 0.468) / 1.010).toFixed(2);
+        let result3 = ((0.800 * input3) - 0.38).toFixed(2);
+        let result4 = ((input4 - 0.468) / 1.009).toFixed(2);
+
+        // Fix the display for -0.00 to 0.00
+        result1 = (result1 === '-0.00') ? '0.00' : result1;
+        result2 = (result2 === '-0.00') ? '0.00' : result2;
+        result3 = (result3 === '-0.00') ? '0.00' : result3;
+        result4 = (result4 === '-0.00') ? '0.00' : result4;
+
+        // Check if any result is above 12.05
+        let warningMessage = document.getElementById('warning-message');
+        if (result1 > 12.05) {
+            document.getElementById('input1').value = 0.47;
+            warningMessage.textContent = "the box definitely weighs less than that";
+            warningMessage.style.display = 'block';
+            result1 = '0.00';
+        } else if (result2 > 12.05) {
+            document.getElementById('input2').value = 0.47;
+            warningMessage.textContent = "the box definitely weighs less than that";
+            warningMessage.style.display = 'block';
+            result2 = '0.00';
+        } else if (result3 > 12.05) {
+            document.getElementById('input3').value = 0.47;
+            warningMessage.textContent = "the box definitely weighs less than that";
+            warningMessage.style.display = 'block';
+            result3 = '0.00';
+        } else if (result4 > 12.05) {
+            document.getElementById('input4').value = 0.47;
+            warningMessage.textContent = "the box definitely weighs less than that";
+            warningMessage.style.display = 'block';
+            result4 = '0.00';
+        } else {
+            warningMessage.style.display = 'none';
         }
 
-        function calculate() {
-            // Get input values
-            let input1 = parseFloat(document.getElementById('input1').value);
-            let input2 = parseFloat(document.getElementById('input2').value);
-            let input3 = parseFloat(document.getElementById('input3').value);
-            let input4 = parseFloat(document.getElementById('input4').value);
+        // Display results in output boxes
+        document.getElementById('output1').textContent = result1;
+        document.getElementById('output2').textContent = result2;
+        document.getElementById('output3').textContent = result3;
+        document.getElementById('output4').textContent = result4;
+    }
 
-            // Perform calculations
-            let result1 = ((input1 - 0.4666) / 1.0135).toFixed(2);
-            let result2 = ((input2 - 0.468) / 1.010).toFixed(2);
-            let result3 = ((0.800 * input3) - 0.376).toFixed(2);
-            let result4 = ((input4 - 0.468) / 1.009).toFixed(2);
+    // Check if the input value is below 0.47
+    function checkMinValue(event) {
+        let input = event.target;
+        let warningMessage = document.getElementById('warning-message');
 
-            // Display results in output boxes
-            document.getElementById('output1').textContent = result1;
-            document.getElementById('output2').textContent = result2;
-            document.getElementById('output3').textContent = result3;
-            document.getElementById('output4').textContent = result4;
+        // If the input value is below 0.47, show the warning message and reset the value to 0.47
+        if (parseFloat(input.value) < 0.47) {
+            input.value = 0.47;
+            warningMessage.textContent = "the box definitely weighs more than that";
+            warningMessage.style.display = 'block';
+        } else {
+            warningMessage.style.display = 'none';
         }
+    }
 
-        // Check if the input value is below 0.47
-        function checkMinValue(event) {
-            let input = event.target;
-            let warningMessage = document.getElementById('warning-message');
+    // Add event listeners to all input fields
+    document.getElementById('input1').addEventListener('input', checkMinValue);
+    document.getElementById('input2').addEventListener('input', checkMinValue);
+    document.getElementById('input3').addEventListener('input', checkMinValue);
+    document.getElementById('input4').addEventListener('input', checkMinValue);
 
-            // If the input value is below 0.47, show the warning message and reset the value to 0.47
-            if (parseFloat(input.value) < 0.47) {
-                input.value = 0.47;
-                warningMessage.style.display = 'block';
-            } else {
-                warningMessage.style.display = 'none';
-            }
-        }
-
-        // Add event listeners to all input fields
-        document.getElementById('input1').addEventListener('input', checkMinValue);
-        document.getElementById('input2').addEventListener('input', checkMinValue);
-        document.getElementById('input3').addEventListener('input', checkMinValue);
-        document.getElementById('input4').addEventListener('input', checkMinValue);
-
-        // Initial calculation on page load
-        window.onload = calculate;
-    </script>
+    // Initial calculation on page load
+    window.onload = calculate;
+</script>
 </body>
 </html>
